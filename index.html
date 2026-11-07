@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halyard: Custom FiveM Scripts</title>
+<meta name="description" content="Halyard builds custom FiveM scripts for ESX, QBCore and Qbox roleplay servers. Tested before delivery, full source code, 14 days of free fixes.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%233ec7b0'/%3E%3Cpath d='M36 28 L36 92 M84 28 L84 92 M36 60 L84 60' stroke='%230b0d11' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M84 28 L36 92' stroke='%230b0d11' stroke-width='4' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d11; --panel:#12161d; --line:#1f252f; --text:#e8ecf2; --muted:#98a2b3;
+  --accent:#3ec7b0; --accent-ink:#0b0d11;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.55;font-size:17px}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:600;letter-spacing:.18em;font-size:15px}
+.brand svg{width:34px;height:34px}
+.nav-cta{font-size:15px;font-weight:500;text-decoration:none;color:var(--muted)}
+.nav-cta:hover{color:var(--text)}
+.hero{padding:72px 0 64px}
+.eyebrow{color:var(--accent);font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 16px}
+h1{font-size:clamp(36px,6vw,60px);line-height:1.08;letter-spacing:-.02em;margin:0 0 20px;font-weight:700;max-width:14ch}
+.lead{color:var(--muted);font-size:clamp(17px,2.2vw,20px);max-width:56ch;margin:0 0 32px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:10px;font-weight:600;text-decoration:none;font-size:16px;min-height:48px}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:#39414e}
+.frameworks{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14px;color:var(--muted)}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em;margin:0 0 28px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:0 0 8px;font-size:18px;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:15.5px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start}
+.steps li::before{counter-increment:s;content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;color:var(--accent)}
+.steps b{display:block;margin-bottom:2px}
+.steps span{color:var(--muted);font-size:15.5px}
+table{width:100%;border-collapse:collapse;font-size:16px}
+td{padding:14px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;font-weight:600;white-space:nowrap;padding-left:16px}
+.note{color:var(--muted);font-size:14.5px;margin-top:14px}
+.guarantee{background:linear-gradient(135deg,rgba(62,199,176,.14),rgba(62,199,176,.03));border:1px solid rgba(62,199,176,.35);border-radius:16px;padding:28px}
+.guarantee p{margin:0;font-size:clamp(18px,2.4vw,22px);font-weight:500;max-width:52ch}
+.contact{text-align:left}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:13.5px}
+footer p{margin:4px 0}
+@media (max-width:560px){
+  .hero{padding:44px 0 44px}
+  .btn{flex:1 1 100%}
+  .nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/" aria-label="Halyard home">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="26" fill="#3ec7b0"/><path d="M36 28 L36 92 M84 28 L84 92 M36 60 L84 60" stroke="#0b0d11" stroke-width="11" stroke-linecap="round"/><path d="M84 28 L36 92" stroke="#0b0d11" stroke-width="4" stroke-linecap="round" opacity=".55"/></svg>
+      HALYARD
+    </a>
+    <a class="nav-cta" href="mailto:hello@halyard.gg?subject=Script%20quote">hello@halyard.gg</a>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">FiveM script studio</p>
+    <h1>Custom scripts that work on your server.</h1>
+    <p class="lead">We build jobs, systems and UIs for roleplay servers, convert scripts between frameworks, and fix the ones that are slowing you down. Every build is tested before you get it.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="https://discord.gg/VAVjmGSmPR">Join our Discord</a>
+      <a class="btn btn-ghost" href="mailto:hello@halyard.gg?subject=Script%20quote">Request a quote</a>
+    </div>
+    <div class="frameworks" aria-label="Supported frameworks">
+      <span class="chip">ESX</span><span class="chip">QBCore</span><span class="chip">Qbox</span><span class="chip">ox_lib · ox_inventory · ox_target</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>What we build</h2>
+    <div class="grid">
+      <div class="card"><h3>Custom scripts</h3><p>New jobs, shops, businesses, interactions and full systems, built to your spec and your setup.</p></div>
+      <div class="card"><h3>Framework conversions</h3><p>Move scripts between ESX, QBCore and Qbox, including the switch to Qbox.</p></div>
+      <div class="card"><h3>Fixes and tweaks</h3><p>Broken after an update? Missing a feature? We repair and extend existing scripts.</p></div>
+      <div class="card"><h3>Performance clean-ups</h3><p>We find the scripts hurting your resmon and make them lighter.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><div><b>Tell us what you need</b><span>Your framework, your key scripts, and what it should do.</span></div></li>
+      <li><div><b>Fixed quote within 24 hours</b><span>A clear scope, price and delivery date. No hourly surprises.</span></div></li>
+      <li><div><b>50% to start</b><span>We build it and test it on a FiveM test server.</span></div></li>
+      <li><div><b>Delivery with full source</b><span>Install guide included. Pay the remaining 50% on delivery.</span></div></li>
+      <li><div><b>14 days of free fixes</b><span>If anything breaks, we fix it.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Typical prices</h2>
+    <table>
+      <tr><td>Fix or tweak an existing script</td><td>from $40</td></tr>
+      <tr><td>Framework conversion</td><td>from $60</td></tr>
+      <tr><td>Small custom script</td><td>from $120</td></tr>
+      <tr><td>Larger systems with custom UI</td><td>quoted per job</td></tr>
+    </table>
+    <p class="note">Prices in USD. Rush delivery under 72 hours available.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="guarantee">
+      <p>Our guarantee: if the delivered script doesn't do what we agreed, we fix it free, or refund your deposit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap">
+    <h2>Start a project</h2>
+    <p class="lead">Message us on Discord or email us with what you need and your framework.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="https://discord.gg/VAVjmGSmPR">Join our Discord</a>
+      <a class="btn btn-ghost" href="mailto:hello@halyard.gg?subject=Script%20quote">hello@halyard.gg</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Halyard is a studio of Elai Labs OÜ · Registry code 17249057 · Tallinn, Estonia · hello@halyard.gg</p>
+    <p>HALYARD IS NOT APPROVED, SPONSORED, OR ENDORSED BY ROCKSTAR GAMES. Not affiliated with Rockstar Games, Take-Two Interactive or Cfx.re.</p>
+    <p>© 2026 Elai Labs OÜ</p>
+  </div>
+</footer>
+</body>
+</html>
