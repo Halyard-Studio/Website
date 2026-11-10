@@ -3,140 +3,312 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Halyard: Custom FiveM Scripts</title>
-<meta name="description" content="Halyard builds custom FiveM scripts for ESX, QBCore and Qbox roleplay servers. Tested before delivery, full source code, 14 days of free fixes.">
+<title>Halyard: FiveM Scripts That Never Break Your Server</title>
+<meta name="description" content="Halyard builds FiveM scripts that make your city feel alive, and never break it. ESX, QBCore and Qbox. Tested on a real server, full source on commissions, 14 days of free fixes.">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%233ec7b0'/%3E%3Cpath d='M36 28 L36 92 M84 28 L84 92 M36 60 L84 60' stroke='%230b0d11' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M84 28 L36 92' stroke='%230b0d11' stroke-width='4' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0d11; --panel:#12161d; --line:#1f252f; --text:#e8ecf2; --muted:#98a2b3;
-  --accent:#3ec7b0; --accent-ink:#0b0d11;
+  --bg:#000; --bg2:#0a0b0d; --card:#101215; --card2:#15181c;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --text:#f5f5f7; --muted:#a1a1a6; --dim:#6e6e73;
+  --accent:#3ec7b0; --accent2:#7ae3d1; --ink:#04110e;
+  --r:28px;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.55;font-size:17px}
-a{color:inherit}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:600;letter-spacing:.18em;font-size:15px}
-.brand svg{width:34px;height:34px}
-.nav-cta{font-size:15px;font-weight:500;text-decoration:none;color:var(--muted)}
-.nav-cta:hover{color:var(--text)}
-.hero{padding:72px 0 64px}
-.eyebrow{color:var(--accent);font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 16px}
-h1{font-size:clamp(36px,6vw,60px);line-height:1.08;letter-spacing:-.02em;margin:0 0 20px;font-weight:700;max-width:14ch}
-.lead{color:var(--muted);font-size:clamp(17px,2.2vw,20px);max-width:56ch;margin:0 0 32px}
-.ctas{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:10px;font-weight:600;text-decoration:none;font-size:16px;min-height:48px}
-.btn-primary{background:var(--accent);color:var(--accent-ink)}
-.btn-primary:hover{filter:brightness(1.08)}
-.btn-ghost{border:1px solid var(--line);color:var(--text)}
-.btn-ghost:hover{border-color:#39414e}
-.frameworks{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
-.chip{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14px;color:var(--muted)}
-section{padding:56px 0;border-top:1px solid var(--line)}
-h2{font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em;margin:0 0 28px;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.card h3{margin:0 0 8px;font-size:18px;font-weight:600}
-.card p{margin:0;color:var(--muted);font-size:15.5px}
-.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
-.steps li{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start}
-.steps li::before{counter-increment:s;content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;color:var(--accent)}
-.steps b{display:block;margin-bottom:2px}
-.steps span{color:var(--muted);font-size:15.5px}
-table{width:100%;border-collapse:collapse;font-size:16px}
-td{padding:14px 0;border-bottom:1px solid var(--line)}
-td:last-child{text-align:right;font-weight:600;white-space:nowrap;padding-left:16px}
-.note{color:var(--muted);font-size:14.5px;margin-top:14px}
-.guarantee{background:linear-gradient(135deg,rgba(62,199,176,.14),rgba(62,199,176,.03));border:1px solid rgba(62,199,176,.35);border-radius:16px;padding:28px}
-.guarantee p{margin:0;font-size:clamp(18px,2.4vw,22px);font-weight:500;max-width:52ch}
-.contact{text-align:left}
-.checklist{margin:-12px 0 28px;padding-left:20px;color:var(--muted);font-size:16px}
-.checklist li{margin:6px 0}
-footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:13.5px}
-footer p{margin:4px 0}
-@media (max-width:560px){
-  .hero{padding:44px 0 44px}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.2em;font-size:13px}
+.brand svg{width:26px;height:26px}
+.links{display:flex;gap:28px;font-size:13px;color:var(--muted)}
+.links a:hover{color:var(--text)}
+.pill{background:var(--text);color:#000;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px}
+.pill:hover{background:#fff}
+
+/* hero */
+.hero{position:relative;text-align:center;padding:110px 0 40px;overflow:hidden}
+.glow{position:absolute;inset:-20% -10% auto;height:620px;background:radial-gradient(50% 50% at 50% 40%,rgba(62,199,176,.22),rgba(62,199,176,0) 70%);pointer-events:none}
+.eyebrow{color:var(--accent);font-weight:600;font-size:15px;letter-spacing:.02em;margin:0 0 14px}
+h1{font-size:clamp(44px,8.4vw,92px);line-height:1.02;letter-spacing:-.045em;font-weight:800;margin:0 auto 10px;max-width:12ch}
+.grad{background:linear-gradient(180deg,#fff 45%,#c3c9d0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(28px,4.6vw,52px);font-weight:700;letter-spacing:-.035em;line-height:1.05;margin:0 0 26px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:clamp(17px,2.2vw,21px);max-width:40ch;margin:0 auto 34px;font-weight:500}
+.ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:999px;font-weight:600;font-size:16px;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--accent);color:var(--ink)}
+.btn-primary:hover{background:var(--accent2)}
+.btn-link{color:var(--accent);padding:0 10px}
+.btn-link::after{content:"›";margin-left:6px;font-size:20px;line-height:1}
+
+/* hero device */
+.stage{position:relative;max-width:820px;margin:70px auto 0;height:360px}
+.screen{position:absolute;inset:0;border-radius:var(--r);background:linear-gradient(160deg,#14181d 0%,#07090b 60%);border:1px solid var(--line2);overflow:hidden;box-shadow:0 40px 120px rgba(62,199,176,.12),0 0 0 1px rgba(255,255,255,.02) inset}
+.screen::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 80% 0%,rgba(62,199,176,.14),transparent 60%),repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 60px),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 60px)}
+.glass{position:absolute;background:rgba(20,24,29,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:18px;padding:14px 16px;text-align:left;font-size:14px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.toast{top:34px;right:34px;display:flex;gap:12px;align-items:center;border-left:3px solid var(--accent);animation:float 6s ease-in-out infinite}
+.toast .dot{width:34px;height:34px;border-radius:10px;background:rgba(62,199,176,.16);display:grid;place-items:center;color:var(--accent);font-weight:800}
+.toast b{display:block;font-size:14px}
+.toast span{color:var(--muted);font-size:13px}
+.menu{left:34px;top:60px;width:250px;animation:float 7s ease-in-out -2s infinite}
+.menu h4{margin:0 0 10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.item{display:flex;justify-content:space-between;padding:9px 10px;border-radius:10px;font-size:14px}
+.item.on{background:rgba(62,199,176,.14);color:var(--accent2)}
+.item em{font-style:normal;color:var(--dim)}
+.meter{right:60px;bottom:40px;width:240px;animation:float 8s ease-in-out -4s infinite}
+.meter .row{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:8px}
+.meter .row b{color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap;margin-left:10px}
+.bar{height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar i{display:block;height:100%;width:4%;background:var(--accent);border-radius:6px}
+.fw{left:34px;bottom:40px;display:flex;gap:8px;padding:10px}
+.fw span{font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--text)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* sections */
+section{padding:120px 0}
+.kicker{color:var(--accent);font-weight:600;font-size:15px;margin:0 0 10px}
+h2{font-size:clamp(34px,5.6vw,60px);line-height:1.05;letter-spacing:-.035em;font-weight:800;margin:0 0 18px;max-width:16ch}
+.center{text-align:center}
+.center h2,.center .intro{margin-left:auto;margin-right:auto}
+.intro{color:var(--muted);font-size:clamp(17px,2vw,21px);max-width:46ch;margin:0 0 56px;font-weight:500}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:80px}
+.stat{background:var(--bg);padding:28px 22px;text-align:center}
+.stat b{display:block;font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;font-weight:800}
+.stat span{color:var(--muted);font-size:14px}
+
+/* standard */
+.std{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 28px;min-height:220px;display:flex;flex-direction:column;transition:border-color .3s,transform .3s}
+.tile:hover{border-color:var(--line2);transform:translateY(-2px)}
+.ico{width:44px;height:44px;border-radius:14px;background:rgba(62,199,176,.12);display:grid;place-items:center;margin-bottom:auto}
+.ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tile h3{font-size:21px;letter-spacing:-.02em;margin:26px 0 8px;font-weight:700}
+.tile p{margin:0;color:var(--muted);font-size:15.5px}
+
+/* feature band */
+.band{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.feature{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.big{background:radial-gradient(80% 90% at 20% 0%,rgba(62,199,176,.18),transparent 60%),var(--card);border:1px solid var(--line);border-radius:var(--r);padding:44px 40px;min-height:420px;display:flex;flex-direction:column;justify-content:flex-end}
+.big .tag{align-self:flex-start;margin-bottom:auto;font-size:13px;font-weight:600;color:var(--accent);border:1px solid rgba(62,199,176,.35);padding:6px 12px;border-radius:999px}
+.big h3{font-size:clamp(30px,4vw,44px);letter-spacing:-.035em;line-height:1.05;margin:0 0 12px;font-weight:800}
+.big p{color:var(--muted);margin:0;font-size:17px;max-width:38ch}
+.stack{display:grid;gap:22px}
+.small{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 28px}
+.small h3{margin:0 0 8px;font-size:21px;letter-spacing:-.02em;font-weight:700}
+.small p{margin:0;color:var(--muted);font-size:15.5px}
+
+/* services */
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc .tile{min-height:200px}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:18px;counter-reset:s}
+.steps li{position:relative;padding-top:56px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-weight:700;color:var(--accent)}
+.steps b{display:block;font-size:17px;letter-spacing:-.01em;margin-bottom:6px}
+.steps span{color:var(--muted);font-size:15px}
+
+/* guarantee */
+.promise{border-radius:36px;padding:80px 40px;text-align:center;background:radial-gradient(60% 120% at 50% 0%,rgba(62,199,176,.25),transparent 70%),var(--card);border:1px solid rgba(62,199,176,.3)}
+.promise p{font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin:0 auto;max-width:22ch}
+.promise small{display:block;color:var(--muted);font-size:16px;margin-top:18px;font-weight:500}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.checklist{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.checklist li{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;gap:14px;color:var(--text);font-size:16px}
+.checklist li:last-child{border-bottom:0}
+.checklist li::before{content:"";flex:0 0 8px;height:8px;margin-top:8px;border-radius:50%;background:var(--accent)}
+.contact .ctas{justify-content:flex-start;margin-top:30px}
+
+footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--dim);font-size:12.5px}
+footer p{margin:6px 0}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.glass{animation:none}html{scroll-behavior:auto}}
+
+@media (max-width:900px){
+  .std,.svc{grid-template-columns:1fr 1fr}
+  .feature,.contact{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:26px}
+  .steps li{padding:0 0 0 58px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .links{display:none}
+  section{padding:84px 0}
+  .hero{padding:72px 0 20px}
+  .std,.svc{grid-template-columns:1fr}
+  .stage{height:450px;margin-top:50px}
+  .menu{left:16px;top:96px;width:210px}
+  .toast{top:16px;right:16px;left:16px}
+  .meter{right:16px;bottom:74px;width:236px}
+  .fw{left:16px;bottom:16px}
+  .big{padding:34px 26px;min-height:360px}
+  .promise{padding:56px 24px}
   .btn{flex:1 1 100%}
-  .nav-cta{display:none}
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
+
+<nav>
+  <div class="wrap">
     <a class="brand" href="/" aria-label="Halyard home">
       <svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="26" fill="#3ec7b0"/><path d="M36 28 L36 92 M84 28 L84 92 M36 60 L84 60" stroke="#0b0d11" stroke-width="11" stroke-linecap="round"/><path d="M84 28 L36 92" stroke="#0b0d11" stroke-width="4" stroke-linecap="round" opacity=".55"/></svg>
       HALYARD
     </a>
-    <a class="nav-cta" href="mailto:hello@halyard.gg?subject=Script%20quote&body=Framework%20(ESX%20%2F%20QBCore%20%2F%20Qbox)%3A%0AInventory%2C%20target%20and%20phone%20scripts%3A%0AWhat%20you%20need%3A%0ADeadline%3A%0ABudget%20(optional)%3A%0A">hello@halyard.gg</a>
-  </header>
-
-  <div class="hero">
-    <p class="eyebrow">FiveM script studio</p>
-    <h1>Custom scripts that work on your server.</h1>
-    <p class="lead">We build jobs, systems and UIs for roleplay servers, convert scripts between frameworks, and fix the ones that are slowing you down. Every build is tested before you get it.</p>
-    <div class="ctas">
-      <a class="btn btn-primary" href="https://discord.gg/VAVjmGSmPR">Join our Discord</a>
-      <a class="btn btn-ghost" href="mailto:hello@halyard.gg?subject=Script%20quote&body=Framework%20(ESX%20%2F%20QBCore%20%2F%20Qbox)%3A%0AInventory%2C%20target%20and%20phone%20scripts%3A%0AWhat%20you%20need%3A%0ADeadline%3A%0ABudget%20(optional)%3A%0A">Request a quote</a>
+    <div class="links">
+      <a href="#standard">The Standard</a>
+      <a href="#city">Living city</a>
+      <a href="#services">Services</a>
+      <a href="#start">Start a project</a>
     </div>
-    <div class="frameworks" aria-label="Supported frameworks">
-      <span class="chip">ESX</span><span class="chip">QBCore</span><span class="chip">Qbox</span><span class="chip">ox_lib · ox_inventory · ox_target</span>
+    <a class="pill" href="https://discord.gg/VAVjmGSmPR">Discord</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="wrap">
+    <p class="eyebrow rv">FiveM script studio</p>
+    <h1 class="grad rv">Make your city feel alive.</h1>
+    <p class="sub rv">Never break it.</p>
+    <p class="lead rv">Scripts for roleplay servers, built to the Halyard Standard: safe with money, light on performance, tested on a real server.</p>
+    <div class="ctas rv">
+      <a class="btn btn-primary" href="#start">Start a project</a>
+      <a class="btn btn-link" href="#standard">See the Standard</a>
+    </div>
+
+    <div class="stage rv" aria-hidden="true">
+      <div class="screen"></div>
+      <div class="glass menu">
+        <h4>Halyard menu</h4>
+        <div class="item on">Start performing <em>E</em></div>
+        <div class="item">Choose a spot <em>›</em></div>
+        <div class="item">Today's tips <em>$240</em></div>
+      </div>
+      <div class="glass toast"><div class="dot">$</div><div><b>+$20 tip</b><span>from a passer-by</span></div></div>
+      <div class="glass meter">
+        <div class="row">Server load (resmon)<b>0.01 ms</b></div>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="glass fw"><span>ESX</span><span>QBCore</span><span>Qbox</span></div>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><b>3 in 1</b><span>ESX, QBCore, Qbox. One price.</span></div>
+      <div class="stat"><b>&lt; 1 hour</b><span>Reply time</span></div>
+      <div class="stat"><b>12 hours</b><span>Fixed quote</span></div>
+      <div class="stat"><b>14 days</b><span>Free fixes</span></div>
     </div>
   </div>
-</div>
+</header>
 
-<section>
+<section id="standard">
   <div class="wrap">
-    <h2>What we build</h2>
-    <div class="grid">
-      <div class="card"><h3>Custom scripts</h3><p>New jobs, shops, businesses, interactions and full systems, built to your spec and your setup.</p></div>
-      <div class="card"><h3>Framework conversions</h3><p>Move scripts between ESX, QBCore and Qbox, including the switch to Qbox.</p></div>
-      <div class="card"><h3>Fixes and tweaks</h3><p>Broken after an update? Missing a feature? We repair and extend existing scripts.</p></div>
-      <div class="card"><h3>Performance clean-ups</h3><p>We find the scripts hurting your resmon and make them lighter.</p></div>
+    <p class="kicker rv">The Halyard Standard</p>
+    <h2 class="rv">Nothing ships until it passes.</h2>
+    <p class="intro rv">Every script is built and tested against the same checklist. If our tester can break it, it goes back to the bench.</p>
+    <div class="std">
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Safe with money</h3><p>Every payment and item is checked by the server, never trusted from the player. No dupes, no exploits.</p></div>
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Light on performance</h3><p>Near-zero load when idle, measured with resmon on every release, with the screenshot to prove it.</p></div>
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg></div><h3>Three frameworks, one price</h3><p>ESX, QBCore and Qbox through our shared core. No paying again to switch.</p></div>
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></div><h3>Restart-proof</h3><p>Survives restarts and players disconnecting mid-action. Nobody loses money or gets stuck.</p></div>
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h3>Tested on a real server</h3><p>A dedicated tester tries to cheat it, crash it and spam it on every framework before release.</p></div>
+      <div class="tile rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/></svg></div><h3>Clean and configurable</h3><p>Every setting in one config file, every text in a language file, a clear install guide and changelog.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="city" class="band">
+  <div class="wrap">
+    <p class="kicker rv">What we make</p>
+    <h2 class="rv">A city people want to come back to.</h2>
+    <p class="intro rv">Players stay when there is something to do from their very first hour. We build the everyday life that fills the streets.</p>
+    <div class="feature">
+      <div class="big rv">
+        <span class="tag">First free release · late November</span>
+        <h3>Everyday city life, made social.</h3>
+        <p>Small street jobs and moments that new players can join in on straight away, and that make great clips.</p>
+      </div>
+      <div class="stack">
+        <div class="small rv"><h3>Built for new players</h3><p>Something fun and social to do in the first hour, so they don't log off and never return.</p></div>
+        <div class="small rv"><h3>Made to be shared</h3><p>Crowds, reactions and payoffs that streamers clip and players talk about.</p></div>
+        <div class="small rv"><h3>One look, everywhere</h3><p>The same clean Halyard interface across every script, so your server feels designed.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <p class="kicker rv">Commissions</p>
+    <h2 class="rv">Built for your server.</h2>
+    <p class="intro rv">Need something specific? We build it to your spec and your setup, to the same Standard.</p>
+    <div class="svc">
+      <div class="tile rv"><h3>Custom scripts</h3><p>Jobs, shops, businesses, interactions and full systems.</p></div>
+      <div class="tile rv"><h3>Framework conversions</h3><p>Move scripts between ESX, QBCore and Qbox, including the switch to Qbox.</p></div>
+      <div class="tile rv"><h3>Fixes and features</h3><p>Broken after an update or missing something? We repair and extend it.</p></div>
+      <div class="tile rv"><h3>Performance clean-ups</h3><p>We find what's hurting your resmon and make it lighter.</p></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>How it works</h2>
-    <ol class="steps">
-      <li><div><b>Tell us what you need</b><span>Your framework, your key scripts, and what it should do.</span></div></li>
-      <li><div><b>Reply within the hour, fixed quote within 12 hours</b><span>Usually much sooner. A clear scope, price and delivery date. No hourly surprises.</span></div></li>
-      <li><div><b>50% to start</b><span>We build it and test it on a FiveM test server.</span></div></li>
-      <li><div><b>Delivery with full source</b><span>Install guide included. Pay the remaining 50% on delivery.</span></div></li>
-      <li><div><b>14 days of free fixes</b><span>If anything breaks, we fix it.</span></div></li>
+    <p class="kicker rv">How it works</p>
+    <h2 class="rv">Clear from first message to delivery.</h2>
+    <ol class="steps" style="margin-top:56px">
+      <li class="rv"><b>Tell us what you need</b><span>Your framework, your key scripts and what it should do.</span></li>
+      <li class="rv"><b>Fixed quote in 12 hours</b><span>We reply within the hour. Clear scope, price and date.</span></li>
+      <li class="rv"><b>50% to start</b><span>We build and test it on a real FiveM server.</span></li>
+      <li class="rv"><b>Delivery with full source</b><span>Install guide included. The rest is paid on delivery.</span></li>
+      <li class="rv"><b>14 days of free fixes</b><span>If anything breaks, we fix it.</span></li>
     </ol>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="guarantee">
-      <p>Our guarantee: if the delivered script doesn't do what we agreed, we fix it free, or refund your deposit.</p>
+    <div class="promise rv">
+      <p>If it doesn't do what we agreed, we fix it free or refund your deposit.</p>
+      <small>The Halyard guarantee on every commission.</small>
     </div>
   </div>
 </section>
 
-<section class="contact">
-  <div class="wrap">
-    <h2>Start a project</h2>
-    <p class="lead">Message us on Discord or email us. We reply within the hour and send a fixed quote within 12 hours, usually much sooner. Include these and we can usually quote straight away:</p>
-    <ul class="checklist">
+<section id="start">
+  <div class="wrap contact">
+    <div>
+      <p class="kicker rv">Start a project</p>
+      <h2 class="rv">Tell us about your city.</h2>
+      <p class="intro rv" style="margin-bottom:0">Message us on Discord or email. Include these and we can usually quote straight away.</p>
+      <div class="ctas rv">
+        <a class="btn btn-primary" href="https://discord.gg/VAVjmGSmPR">Join our Discord</a>
+        <a class="btn btn-link" href="mailto:hello@halyard.gg?subject=Script%20quote&body=Framework%20(ESX%20%2F%20QBCore%20%2F%20Qbox)%3A%0AInventory%2C%20target%20and%20phone%20scripts%3A%0AWhat%20you%20need%3A%0AScripts%20it%20must%20work%20with%20or%20replace%3A%0ADeadline%3A%0ABudget%20(optional)%3A%0A">hello@halyard.gg</a>
+      </div>
+    </div>
+    <ul class="checklist rv">
       <li>Your framework: ESX, QBCore or Qbox</li>
       <li>Your inventory, target and phone scripts</li>
-      <li>What it should do, with examples or a video if you have one</li>
+      <li>What it should do, with examples or a video</li>
       <li>Any scripts it must work with or replace</li>
       <li>Your deadline, and a budget if you have one</li>
     </ul>
-    <div class="ctas">
-      <a class="btn btn-primary" href="https://discord.gg/VAVjmGSmPR">Join our Discord</a>
-      <a class="btn btn-ghost" href="mailto:hello@halyard.gg?subject=Script%20quote&body=Framework%20(ESX%20%2F%20QBCore%20%2F%20Qbox)%3A%0AInventory%2C%20target%20and%20phone%20scripts%3A%0AWhat%20you%20need%3A%0ADeadline%3A%0ABudget%20(optional)%3A%0A">hello@halyard.gg</a>
-    </div>
   </div>
 </section>
 
@@ -147,5 +319,16 @@ footer p{margin:4px 0}
     <p>© 2026 Elai Labs OÜ</p>
   </div>
 </footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
